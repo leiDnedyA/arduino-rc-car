@@ -5,8 +5,9 @@ usage() {
   exit 1
 }
 
-BOARD=$1
-shift # Remove BOARD from the arg list
+# BOARD=$1
+# shift # Remove BOARD from the arg list
+BOARD="/dev/ttyACM0"
 
 MONITOR=false
 
