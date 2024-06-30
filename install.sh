@@ -1,5 +1,5 @@
 #!/bin/bash
 
-arduino-cli install IRRemote@2.6.0
+arduino-cli lib install IRRemote
 
 exit 0

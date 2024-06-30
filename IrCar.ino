@@ -1,3 +1,6 @@
+// #define USE_IRREMOTE_HPP_AS_PLAIN_INCLUDE
+#include <IRremote.h>
+
 const int forwardPin = 8;
 const int backwardPin = 12;
 const int readPin = A5;
@@ -8,14 +11,26 @@ void turnMotorOff();
 
 unsigned long lastSignal = 0;
 
+IRrecv irrecv(readPin);
+decode_results results;
+
 void setup() {
   pinMode(forwardPin, OUTPUT);
-//  pinMode(backwardPin, OUTPUT);
-  pinMode(readPin, INPUT);
+  pinMode(backwardPin, OUTPUT);
   Serial.begin(9600);
+  irrecv.enableIRIn();
+  /*
+  // For raw IR reading
+  pinMode(readPin, INPUT);
+  */
 }
 
 void loop() {
+  if (irrecv.decode(&results)) {
+    Serial.print("Received: ");
+    Serial.println(results.value, HEX);
+    irrecv.resume();
+  }
   /*
   // Print out sensor reads as bits
   int sensorValue = analogRead(readPin);
@@ -31,6 +46,8 @@ void loop() {
   }
   */
 
+  /*
+  // For raw IR reading
   int sensorValue = analogRead(readPin);
   float voltage = sensorValue * (5.0 / 1024.0);
   Serial.println(sensorValue);
@@ -51,6 +68,7 @@ void loop() {
     } else {
       turnMotorOff();
       }
+  */
   
 }
 
